@@ -43,17 +43,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className="sticky top-0 z-40 bg-[#20150b] text-stone-200 border-b-2 border-[#C9A84C] shadow-md px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-14">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-14 sm:h-16">
         
-        {/* Brand: • Trah Sosentono */}
+        {/* Brand: logo gambar (public/logo-trah.png) */}
         <div
           onClick={() => setActiveTab('beranda')}
-          className="flex items-center gap-2 cursor-pointer select-none group"
+          className="flex items-center cursor-pointer select-none group"
         >
-          <span className="w-2 h-2 rounded-full bg-[#C9A84C] opacity-80 group-hover:opacity-100 transition-opacity" />
-          <span className="font-serif-title font-bold text-base sm:text-lg text-[#C9A84C] tracking-wide group-hover:text-[#E8D4A0] transition-colors">
-            {settings.familyName || 'Trah Sosentono'}
-          </span>
+          <img
+            src={`${import.meta.env.BASE_URL}logo-trah.png`}
+            alt={settings.familyName || 'Trah Sosentono'}
+            className="h-11 sm:h-14 w-auto opacity-95 group-hover:opacity-100 transition-opacity"
+          />
         </div>
 
         {/* Desktop Nav */}
