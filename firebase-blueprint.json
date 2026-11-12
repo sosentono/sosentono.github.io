@@ -1,0 +1,172 @@
+{
+  "entities": {
+    "Person": {
+      "title": "Person",
+      "description": "A family member or spouse in the genealogy archive",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 200 },
+        "callName": { "type": "string", "maxLength": 100 },
+        "gender": { "type": "string", "enum": ["MALE", "FEMALE"] },
+        "birthYear": { "type": "integer" },
+        "birthDate": { "type": "string", "maxLength": 20 },
+        "deathYear": { "type": "integer" },
+        "deathDate": { "type": "string", "maxLength": 20 },
+        "isAlive": { "type": "boolean" },
+        "photoUrl": { "type": "string", "maxLength": 1000 },
+        "residence": { "type": "string", "maxLength": 200 },
+        "occupation": { "type": "string", "maxLength": 150 },
+        "biography": { "type": "string", "maxLength": 5000 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "isWiwitan": { "type": "boolean" },
+        "isDescendant": { "type": "boolean" },
+        "generation": { "type": "integer" },
+        "branchName": { "type": "string", "maxLength": 100 },
+        "visibility": { "type": "string", "enum": ["PUBLIC", "FAMILY", "PRIVATE"] },
+        "showPhoto": { "type": "boolean" },
+        "showBirthDate": { "type": "boolean" },
+        "showBirthYear": { "type": "boolean" },
+        "showResidence": { "type": "boolean" },
+        "showBiography": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 60 },
+        "updatedAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "name", "gender", "isDescendant"]
+    },
+    "Relationship": {
+      "title": "Relationship",
+      "description": "Normalized relationships between family members (PARENT or SPOUSE)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "person1Id": { "type": "string", "maxLength": 128 },
+        "person2Id": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "enum": ["PARENT", "SPOUSE"] },
+        "order": { "type": "integer" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "person1Id", "person2Id", "type"]
+    },
+    "Agenda": {
+      "title": "Agenda",
+      "description": "Family gatherings including Arisan Minggu Pon and Trah Besar Syawal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "enum": ["ARISAN", "TRAH_BESAR", "OTHER"] },
+        "title": { "type": "string", "maxLength": 200 },
+        "date": { "type": "string", "maxLength": 20 },
+        "time": { "type": "string", "maxLength": 50 },
+        "location": { "type": "string", "maxLength": 250 },
+        "hostFamily": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 3000 },
+        "gmapsUrl": { "type": "string", "maxLength": 1000 },
+        "documentationUrl": { "type": "string", "maxLength": 1000 },
+        "hijriYear": { "type": "string", "maxLength": 20 },
+        "theme": { "type": "string", "maxLength": 200 },
+        "contactPerson": { "type": "string", "maxLength": 100 },
+        "status": { "type": "string", "enum": ["UPCOMING", "COMPLETED", "CANCELLED"] },
+        "createdAt": { "type": "string", "maxLength": 60 },
+        "updatedAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "type", "title", "date"]
+    },
+    "Kabar": {
+      "title": "Kabar",
+      "description": "Recent family news, births, weddings, achievements, and notices",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "enum": ["Kelahiran", "Pernikahan", "Kabar Duka", "Prestasi", "Undangan", "Pengumuman", "Kegiatan"] },
+        "content": { "type": "string", "maxLength": 5000 },
+        "author": { "type": "string", "maxLength": 100 },
+        "date": { "type": "string", "maxLength": 20 },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "title", "category", "content", "date"]
+    },
+    "Cariyos": {
+      "title": "Cariyos",
+      "description": "Cultural and historical family archive of ancestor stories, traditions, and memories",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "enum": ["Leluhur", "Sejarah Trah", "Migrasi", "Tradisi", "Pitutur Luhur", "Asal-Usul", "Foto Lawas"] },
+        "content": { "type": "string", "maxLength": 10000 },
+        "era": { "type": "string", "maxLength": 100 },
+        "narrator": { "type": "string", "maxLength": 100 },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "audioUrl": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "maxLength": 60 },
+        "updatedAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "title", "category", "content"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Registered administrator accounts with role-based access",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 120 },
+        "displayName": { "type": "string", "maxLength": 120 },
+        "role": { "type": "string", "enum": ["master_admin", "admin"] },
+        "addedBy": { "type": "string", "maxLength": 120 },
+        "createdAt": { "type": "string", "maxLength": 60 },
+        "updatedAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global family settings including Wiwitan reference, Minggu Pon calendar reference",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "familyName": { "type": "string", "maxLength": 150 },
+        "wiwitanPersonId": { "type": "string", "maxLength": 128 },
+        "mingguPonReferenceDate": { "type": "string", "maxLength": 20 },
+        "tagline": { "type": "string", "maxLength": 250 },
+        "announcement": { "type": "string", "maxLength": 1000 },
+        "updatedAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "familyName"]
+    }
+  },
+  "firestore": {
+    "/people/{personId}": {
+      "schema": { "$ref": "#/entities/Person" },
+      "description": "Collection of family members and spouses"
+    },
+    "/relationships/{relationshipId}": {
+      "schema": { "$ref": "#/entities/Relationship" },
+      "description": "Normalized parent-child and spouse relationships"
+    },
+    "/agendas/{agendaId}": {
+      "schema": { "$ref": "#/entities/Agenda" },
+      "description": "Family agendas including Arisan Minggu Pon and Trah Besar Syawal"
+    },
+    "/kabar/{kabarId}": {
+      "schema": { "$ref": "#/entities/Kabar" },
+      "description": "Recent family news, announcements, and events"
+    },
+    "/cariyos/{cariyosId}": {
+      "schema": { "$ref": "#/entities/Cariyos" },
+      "description": "Cultural historical archive and ancestor stories"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Authorized administrators"
+    },
+    "/settings/{settingsId}": {
+      "schema": { "$ref": "#/entities/Settings" },
+      "description": "Application settings and calendar anchors"
+    }
+  }
+}

@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #FAF7F2;
+  --gold: #C9A84C;
+  --gold-light: #E8D4A0;
+  --gold-dim: rgba(201, 168, 76, 0.15);
+  --bd: #24180E;
+  --bm: #3B2A1A;
+  --bl: #5C3D2A;
+  --td: #2C1A0E;
+  --tm: #5C3D2A;
+  --tl: #8B6A50;
+  --border: rgba(201, 168, 76, 0.25);
+  --sh: rgba(59, 42, 26, 0.08);
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Lato', system-ui, -apple-system, sans-serif;
+    background-color: var(--cream);
+    color: var(--td);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, .font-serif-title {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Prototype Hero Background with Subtle Geometry */
+.hero-pattern {
+  background: linear-gradient(135deg, #20150b 0%, #301f12 55%, #422c19 100%);
+  position: relative;
+}
+
+.hero-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23C9A84C' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Ultra-minimalist Tree Canvas Dot Pattern - light, refined, non-distracting */
+.tree-canvas-bg {
+  background-color: #fdfcfb;
+  background-image: radial-gradient(circle, rgba(140, 120, 95, 0.045) 0.6px, transparent 0.6px);
+  background-size: 28px 28px;
+}
+
+.tree-canvas-bg-clean {
+  background-color: #ffffff;
+  background-image: none;
+}
+
+/* Dedicated Print Stylesheet */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt;
+  }
+
+  nav,
+  header,
+  footer,
+  .no-print,
+  button,
+  .print-hide,
+  .floating-controls,
+  input,
+  select,
+  textarea {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-canvas-wrapper {
+    overflow: visible !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  @page {
+    size: landscape;
+    margin: 1cm;
+  }
+}

@@ -1,0 +1,77 @@
+rules_version = '2';
+
+// Aturan keamanan Trah Sosentono
+// - Semua orang boleh MEMBACA data silsilah, agenda, kabar, cariyos, galeri.
+// - Hanya admin yang sudah login (punya dokumen admins/{uid}) boleh MENGUBAH.
+// - Hanya Master Admin yang boleh mengelola daftar admin.
+//
+// Cara pasang: Firebase Console > Firestore Database > Rules > tempel seluruh isi
+// file ini > Publish.
+//
+// PENTING: email di fungsi isMainMaster() harus sama dengan MASTER_ADMIN_EMAIL
+// di src/context/AuthContext.tsx.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isMainMaster() {
+      return signedIn() && request.auth.token.email == 'admin@sosentono.ai.studio';
+    }
+
+    function adminDoc() {
+      return get(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isAdmin() {
+      return isMainMaster()
+        || (signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    function isMaster() {
+      return isMainMaster()
+        || (isAdmin() && adminDoc().data.role == 'master_admin');
+    }
+
+    // Daftar admin: tidak terlihat oleh tamu
+    match /admins/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow write: if isMaster();
+    }
+
+    // Data keluarga: publik bisa membaca, hanya admin yang bisa mengubah
+    match /people/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /relationships/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /agendas/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /kabar/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /cariyos/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /gallery/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /settings/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Selain yang disebut di atas: ditolak (bawaan Firestore).
+  }
+}
