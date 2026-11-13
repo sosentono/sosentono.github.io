@@ -269,7 +269,7 @@ export const MiniKalenderJawa: React.FC<MiniKalenderJawaProps> = ({
           </span>
         </div>
         <span className="text-stone-400 font-mono">
-          API TanggalanJawa
+  
         </span>
       </div>
 
