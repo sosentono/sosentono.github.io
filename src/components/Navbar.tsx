@@ -10,8 +10,11 @@ import {
   Calendar,
   Newspaper,
   BookOpen,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Search
 } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { motionTokens } from './arc/lib/motion-tokens';
 import { useAuth } from '../context/AuthContext';
 import { useFamily } from '../context/FamilyContext';
 
@@ -20,6 +23,7 @@ interface NavbarProps {
   setActiveTab: (tab: string) => void;
   textSize: 'normal' | 'large' | 'xlarge';
   setTextSize: (size: 'normal' | 'large' | 'xlarge') => void;
+  onOpenSearch?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -27,7 +31,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   textSize,
   setTextSize,
+  onOpenSearch,
 }) => {
+  const reduce = useReducedMotion();
+  const Underline = () => (
+    <motion.span
+      layoutId="nav-underline"
+      className="absolute left-2 right-2 -bottom-0.5 h-0.5 rounded bg-[#C9A84C]"
+      transition={reduce ? { duration: 0 } : motionTokens.spring.morph}
+    />
+  );
   const { currentAdmin, isAdmin, isMasterAdmin, logout } = useAuth();
   const { settings } = useFamily();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -62,51 +75,55 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Beranda */}
           <button
             onClick={() => setActiveTab('beranda')}
-            className={`px-3 py-1.5 rounded transition-colors ${
+            className={`relative px-3 py-1.5 rounded transition-colors ${
               activeTab === 'beranda'
-                ? 'text-[#C9A84C] font-bold border-b-2 border-[#C9A84C]'
+                ? 'text-[#C9A84C] font-semibold'
                 : 'text-stone-300 hover:text-[#C9A84C]'
             }`}
           >
             Beranda
+            {activeTab === 'beranda' && <Underline />}
           </button>
 
           {/* Pohon */}
           <button
             onClick={() => setActiveTab('pohon')}
-            className={`px-3 py-1.5 rounded transition-colors ${
+            className={`relative px-3 py-1.5 rounded transition-colors ${
               activeTab === 'pohon'
-                ? 'text-[#C9A84C] font-bold border-b-2 border-[#C9A84C]'
+                ? 'text-[#C9A84C] font-semibold'
                 : 'text-stone-300 hover:text-[#C9A84C]'
             }`}
           >
             Pohon
+            {activeTab === 'pohon' && <Underline />}
           </button>
 
           {/* Anggota */}
           <button
             onClick={() => setActiveTab('anggota')}
-            className={`px-3 py-1.5 rounded transition-colors ${
+            className={`relative px-3 py-1.5 rounded transition-colors ${
               activeTab === 'anggota'
-                ? 'text-[#C9A84C] font-bold border-b-2 border-[#C9A84C]'
+                ? 'text-[#C9A84C] font-semibold'
                 : 'text-stone-300 hover:text-[#C9A84C]'
             }`}
           >
             Anggota
+            {activeTab === 'anggota' && <Underline />}
           </button>
 
           {/* Informasi Dropdown */}
           <div className="relative">
             <button
               onClick={() => setInfoDropdownOpen(!infoDropdownOpen)}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded transition-colors ${
+              className={`relative flex items-center gap-1 px-3 py-1.5 rounded transition-colors ${
                 isInfoActive
-                  ? 'text-[#C9A84C] font-bold border-b-2 border-[#C9A84C]'
+                  ? 'text-[#C9A84C] font-semibold'
                   : 'text-stone-300 hover:text-[#C9A84C]'
               }`}
             >
               <span>Informasi</span>
               <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              {isInfoActive && <Underline />}
             </button>
 
             {infoDropdownOpen && (
@@ -163,6 +180,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
+          {onOpenSearch && (
+            <button
+              onClick={onOpenSearch}
+              title="Cari (Ctrl atau Cmd + K)"
+              aria-label="Cari anggota atau halaman"
+              className="flex items-center gap-2 px-2.5 py-1 rounded border border-[#C9A84C]/30 text-stone-300 hover:text-[#C9A84C] text-[11px] normal-case transition-colors ml-1"
+            >
+              <Search className="w-3.5 h-3.5 text-[#C9A84C]" aria-hidden="true" />
+              <span className="hidden lg:inline">Cari</span>
+              <kbd className="hidden lg:inline text-[10px] text-stone-400 font-sans">Ctrl K</kbd>
+            </button>
+          )}
+
           {/* Elder Text Size Switcher */}
           <button
             onClick={cycleTextSize}
@@ -216,6 +246,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 sm:hidden">
+          {onOpenSearch && (
+            <button
+              onClick={onOpenSearch}
+              className="p-1.5 text-stone-300 hover:text-[#C9A84C]"
+              aria-label="Cari anggota atau halaman"
+            >
+              <Search className="w-4 h-4 text-[#C9A84C]" aria-hidden="true" />
+            </button>
+          )}
           <button
             onClick={cycleTextSize}
             className="p-1.5 text-stone-300 hover:text-[#C9A84C]"

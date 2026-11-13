@@ -1,5 +1,6 @@
 import React from 'react';
 import { Settings, Person } from '../types';
+import { AnimatedCounter } from './arc/animated-counter/animated-counter';
 
 interface HomeHeroProps {
   settings: Settings;
@@ -47,41 +48,44 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
 
         {/* 3 Metric Counters Matching Prototype with modern refinement */}
         <div className="pt-4 flex justify-center items-center gap-8 sm:gap-14">
-          <div
+          <button
+            type="button"
             onClick={() => onNavigate && onNavigate('anggota')}
-            className={`text-center group ${onNavigate ? 'cursor-pointer' : ''}`}
+            className="text-center group cursor-pointer bg-transparent border-0 p-0"
           >
-            <div className="text-3xl sm:text-4xl font-serif text-[#C9A84C] font-bold group-hover:scale-105 transition-transform">
-              {memberCount}
+            <div className="arc-on-dark flex justify-center">
+              <AnimatedCounter value={memberCount} />
             </div>
-            <div className="text-[10px] sm:text-[11px] text-[#E8D4A0] uppercase tracking-[1.5px] opacity-75 mt-0.5">
+            <div className="text-xs sm:text-[13px] text-[#E8D4A0] opacity-80 mt-1.5">
               Anggota
             </div>
-          </div>
+          </button>
 
-          <div
+          <button
+            type="button"
             onClick={() => onNavigate && onNavigate('pohon')}
-            className={`text-center group ${onNavigate ? 'cursor-pointer' : ''}`}
+            className="text-center group cursor-pointer bg-transparent border-0 p-0"
           >
-            <div className="text-3xl sm:text-4xl font-serif text-[#C9A84C] font-bold group-hover:scale-105 transition-transform">
-              {generationCount}
+            <div className="arc-on-dark flex justify-center">
+              <AnimatedCounter value={generationCount} />
             </div>
-            <div className="text-[10px] sm:text-[11px] text-[#E8D4A0] uppercase tracking-[1.5px] opacity-75 mt-0.5">
+            <div className="text-xs sm:text-[13px] text-[#E8D4A0] opacity-80 mt-1.5">
               Generasi
             </div>
-          </div>
+          </button>
 
-          <div
+          <button
+            type="button"
             onClick={() => onNavigate && onNavigate('agenda')}
-            className={`text-center group ${onNavigate ? 'cursor-pointer' : ''}`}
+            className="text-center group cursor-pointer bg-transparent border-0 p-0"
           >
-            <div className="text-3xl sm:text-4xl font-serif text-[#C9A84C] font-bold group-hover:scale-105 transition-transform">
-              {agendaCount}
+            <div className="arc-on-dark flex justify-center">
+              <AnimatedCounter value={agendaCount} />
             </div>
-            <div className="text-[10px] sm:text-[11px] text-[#E8D4A0] uppercase tracking-[1.5px] opacity-75 mt-0.5">
+            <div className="text-xs sm:text-[13px] text-[#E8D4A0] opacity-80 mt-1.5">
               Agenda
             </div>
-          </div>
+          </button>
         </div>
 
       </div>
