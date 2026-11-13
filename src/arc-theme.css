@@ -1,0 +1,56 @@
+/*
+ * Tema Arc UI untuk Trah Sosentono.
+ * Hanya mengganti token warna dan font bawaan Arc (foundation.css) dengan palet
+ * cokelat dan emas situs ini. Kode komponen Arc sendiri tidak diubah.
+ * Dimuat SETELAH foundation.css (lihat src/main.tsx).
+ */
+:root {
+  color-scheme: light;
+
+  /* Permukaan: krem hangat dan putih */
+  --background: #faf7f2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-muted: #f4eee1;
+
+  /* Teks: cokelat tua */
+  --foreground: #2c1a0e;
+  --text-secondary: #5c3d2a;
+  --text-muted: #7d6149;
+
+  /* Garis: emas lembut */
+  --border: #e8dec6;
+  --border-subtle: #f1e9d6;
+  --border-strong: #cdb98a;
+
+  /* Aksen: emas tua (kontras teks di atas putih sekitar 4,8:1) */
+  --accent: #8f6f20;
+  --accent-strong: #6f5415;
+  --accent-subtle: rgb(201 168 76 / .18);
+  --accent-foreground: #ffffff;
+
+  /* Kontrol terpilih: cokelat tua dengan penanda emas muda */
+  --control-on: #20150b;
+  --control-glyph: #e8d4a0;
+  --control-fill: #20150b;
+
+  /* Font situs: judul serif, isi sans */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+
+/* Angka di banner beranda: Arc menggambar angka dengan --foreground,
+   jadi di latar cokelat tua cukup diganti token-nya untuk bagian itu saja. */
+.arc-on-dark {
+  --foreground: #c9a84c;
+  --text-3xl: 2.25rem;
+}
+@media (min-width: 640px) {
+  .arc-on-dark { --text-3xl: 2.5rem; }
+}
+
+/* Bar pengumuman: pakai cokelat tua situs, bukan warna foreground murni */
+.arc-announcement {
+  --foreground: #20150b;
+  --background: #e8d4a0;
+}

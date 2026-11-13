@@ -24,6 +24,11 @@ import { PersonFormModal } from './components/admin/PersonFormModal';
 import { AgendaFormModal } from './components/admin/AgendaFormModal';
 import { CariyosFormModal } from './components/admin/CariyosFormModal';
 import { KabarFormModal } from './components/admin/KabarFormModal';
+import { motion, useReducedMotion } from 'motion/react';
+import { EmptyState } from './components/arc/empty-state/empty-state';
+import { Skeleton } from './components/arc/skeleton/skeleton';
+import { AnnouncementBar } from './components/arc/announcement-bar/announcement-bar';
+import { SearchPalette } from './components/SearchPalette';
 import { MiniKalenderJawa } from './components/home/MiniKalenderJawa';
 import { getWeton, format24HourWIB } from './utils/javaneseCalendar';
 import { Person, Agenda, Cariyos, Kabar } from './types';
@@ -394,33 +399,82 @@ function MainApp() {
     }
   };
 
+  const reduceMotion = useReducedMotion();
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  // Cmd/Ctrl + K membuka pencarian cepat
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Agenda terdekat yang akan datang untuk bar pengumuman
+  const nextAgenda = React.useMemo(() => {
+    const today = new Date();
+    const iso = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    return [...agendas]
+      .filter((a) => a.status === 'UPCOMING' && a.date >= iso)
+      .sort((a, b) => a.date.localeCompare(b.date))[0];
+  }, [agendas]);
+
   const maxGen = Math.max(...people.map(p => p.generation ?? 0), 0) + 1;
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAF7F2] flex flex-col items-center justify-center p-4">
-        <div className="w-10 h-10 border-4 border-[#C9A84C]/30 border-t-[#C9A84C] rounded-full animate-spin mb-3" />
-        <p className="font-serif-title font-semibold text-[#20150b] text-sm">
-          Memuat data keluarga...
-        </p>
+      <div className="min-h-screen bg-[#FAF7F2] px-4 py-10">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <Skeleton label="Memuat data keluarga" lines={2} />
+          <Skeleton lines={4} avatar />
+          <Skeleton lines={4} avatar />
+        </div>
       </div>
     );
   }
+
 
   return (
     <div className={`min-h-screen flex flex-col bg-[#FAF7F2] text-[#2C1A0E] ${
       textSize === 'xlarge' ? 'text-lg' : textSize === 'large' ? 'text-base' : 'text-sm'
     }`}>
+      {nextAgenda && (
+        <div className="arc-announcement">
+          <AnnouncementBar
+            id="agenda-terdekat"
+            dismissible
+            messages={[
+              {
+                id: nextAgenda.id,
+                message: `Agenda berikutnya: ${nextAgenda.title}, ${new Date(nextAgenda.date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`,
+                action: { label: 'Lihat agenda', onClick: () => navigateToTab('agenda') },
+              },
+            ]}
+          />
+        </div>
+      )}
+
       {/* Navigation */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={navigateToTab}
         textSize={textSize}
         setTextSize={setTextSize}
+        onOpenSearch={() => setPaletteOpen(true)}
       />
 
       {/* Main Content Area */}
       <main className="flex-1">
+        <motion.div
+          key={activeTab}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0.1 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
         
         {/* ================= TAB: BERANDA ================= */}
         {activeTab === 'beranda' && (
@@ -521,9 +575,11 @@ function MainApp() {
                   {/* Kolom Kiri: Kartu Agenda Kegiatan */}
                   <div className="lg:col-span-7 space-y-3.5">
                     {agendas.length === 0 ? (
-                      <div className="p-8 text-center bg-white rounded-3xl border border-stone-200 text-stone-400 text-xs">
-                        Belum ada agenda yang dijadwalkan.
-                      </div>
+                      <EmptyState
+                        title="Belum ada agenda"
+                        description="Agenda arisan dan pertemuan trah akan tampil di sini setelah dijadwalkan pengurus."
+                        icon={<Calendar width={24} height={24} strokeWidth={1.5} />}
+                      />
                     ) : (
                       <div className="space-y-3">
                         {sortedAgendas.slice(0, 6).map((item) => (
@@ -784,7 +840,17 @@ function MainApp() {
             <AdminLoginPortal onBackToHome={handleGoBack} />
           )
         )}
+        </motion.div>
       </main>
+
+      <SearchPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        people={people}
+        isAdmin={isAdmin}
+        onNavigate={navigateToTab}
+        onSelectPerson={handleSelectPerson}
+      />
 
       {/* ================= MODALS ================= */}
       <PersonDetailModal
