@@ -1,4 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import SegmentedControl from '../arc/segmented-control/segmented-control';
+import { EmptyState } from '../arc/empty-state/empty-state';
+import { Button } from '../arc/button/button';
 import {
   Search,
   Grid,
@@ -218,30 +221,15 @@ export const MemberDirectory: React.FC<MemberDirectoryProps> = ({
         {/* Right Tools: View Toggle & Excel Export Button */}
         <div className="flex items-center gap-2 self-end md:self-auto shrink-0">
           {/* View Toggle */}
-          <div className="flex items-center bg-[#FAF7F2] p-1 rounded-xl border border-[#C9A84C]/20">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors ${
-                viewMode === 'grid'
-                  ? 'bg-white text-stone-900 shadow-2xs'
-                  : 'text-stone-500 hover:text-stone-800'
-              }`}
-              title="Tampilan Kartu"
-            >
-              <Grid className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors ${
-                viewMode === 'table'
-                  ? 'bg-white text-stone-900 shadow-2xs'
-                  : 'text-stone-500 hover:text-stone-800'
-              }`}
-              title="Tampilan Tabel"
-            >
-              <ListIcon className="w-3.5 h-3.5" />
-            </button>
-          </div>
+          <SegmentedControl
+            label="Tampilan daftar anggota"
+            value={viewMode}
+            onValueChange={(v) => setViewMode(v as 'grid' | 'table')}
+            options={[
+              { value: 'grid', label: 'Kartu', accessory: <Grid className="w-3.5 h-3.5" aria-hidden="true" /> },
+              { value: 'table', label: 'Tabel', accessory: <ListIcon className="w-3.5 h-3.5" aria-hidden="true" /> },
+            ]}
+          />
 
           {/* Export Excel Button */}
           <button
@@ -482,29 +470,16 @@ export const MemberDirectory: React.FC<MemberDirectoryProps> = ({
 
       {/* ================= VIEW: EMPTY STATE ================= */}
       {filteredPeople.length === 0 && (
-        <div className="p-12 text-center bg-white rounded-2xl border border-stone-200 text-stone-500 space-y-3 shadow-xs">
-          <div className="w-12 h-12 rounded-full bg-amber-50 text-[#C9A84C] flex items-center justify-center mx-auto">
-            <SearchX className="w-6 h-6" />
-          </div>
-          <div>
-            <h4 className="font-bold text-stone-900 text-base font-serif-title">
-              Tidak Ada Anggota yang Cocok
-            </h4>
-            <p className="text-xs text-stone-500 max-w-md mx-auto mt-1 leading-relaxed">
-              Tidak ditemukan data keluarga yang sesuai dengan kombinasi pencarian atau filter yang dipilih (cabang, generasi, atau lokasi tempat tinggal).
-            </p>
-          </div>
-          <div className="pt-2">
-            <button
-              type="button"
-              onClick={handleResetFilters}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#20150b] text-[#C9A84C] hover:bg-[#322013] text-xs font-bold transition-all shadow-xs"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Hapus Filter & Tampilkan Semua</span>
-            </button>
-          </div>
-        </div>
+        <EmptyState
+          title="Tidak ada anggota yang cocok"
+          description="Tidak ditemukan data yang sesuai dengan pencarian atau filter yang dipilih. Coba longgarkan cabang, generasi, atau lokasi."
+          icon={<SearchX width={24} height={24} strokeWidth={1.5} />}
+          action={
+            <Button variant="secondary" size="sm" onClick={handleResetFilters}>
+              Hapus filter dan tampilkan semua
+            </Button>
+          }
+        />
       )}
 
       {/* ================= VIEW: GRID CARDS ================= */}

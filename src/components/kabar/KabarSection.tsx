@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { EmptyState } from '../arc/empty-state/empty-state';
 import {
   Calendar,
   User,
@@ -159,9 +160,11 @@ export const KabarSection: React.FC<KabarSectionProps> = ({
         ))}
 
         {filteredKabar.length === 0 && (
-          <div className="col-span-full bg-white p-8 rounded-xl border border-[#C9A84C]/20 text-center text-stone-500 text-xs">
-            Belum ada warta untuk kategori ini.
-          </div>
+          <EmptyState
+            className="col-span-full"
+            title="Belum ada warta"
+            description="Belum ada kabar untuk kategori ini."
+          />
         )}
       </div>
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  X,
   MapPin,
   Calendar,
   Briefcase,
@@ -9,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Person, Relationship, getJavaneseGenerationTerm } from '../../types';
 import { useAuth } from '../../context/AuthContext';
+import { Drawer, DrawerContent, useDrawerItem } from '../arc/drawer/drawer';
 
 interface PersonDetailModalProps {
   person: Person | null;
@@ -32,10 +32,11 @@ export const PersonDetailModal: React.FC<PersonDetailModalProps> = ({
   const { isAdmin } = useAuth();
   const [isConfirmingDelete, setIsConfirmingDelete] = React.useState(false);
 
-  if (!person) return null;
+  const shown = useDrawerItem(person);
+  if (!shown) return null;
 
   // Always resolve latest person record from live people prop so edits sync immediately
-  const activePerson = people.find(p => p.id === person.id) || person;
+  const activePerson = people.find(p => p.id === shown.id) || shown;
 
   const personMap = new Map<string, Person>();
   people.forEach(p => personMap.set(p.id, p));
@@ -63,17 +64,15 @@ export const PersonDetailModal: React.FC<PersonDetailModalProps> = ({
   const canShowResidence = (activePerson.showResidence && !isPrivate) || !isLiving || isAdmin;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-xs p-4 overflow-y-auto">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full border border-[#C9A84C]/35 overflow-hidden my-6">
-        
+    <Drawer open={person !== null} onOpenChange={(o) => { if (!o) onClose(); }}>
+      <DrawerContent
+        title={activePerson.name}
+        description={activePerson.callName ? `Panggilan: ${activePerson.callName}` : 'Data anggota trah'}
+      >
+      <div className="bg-white overflow-hidden">
+
         {/* Header matching prototype */}
         <div className="p-5 border-b border-[#C9A84C]/20 bg-[#FAF7F2] relative">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 rounded-lg text-stone-400 hover:text-stone-900 hover:bg-stone-200/60 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
 
           <div className="flex flex-wrap items-center gap-2 mb-2">
             {activePerson.isDescendant ? (
@@ -114,14 +113,6 @@ export const PersonDetailModal: React.FC<PersonDetailModalProps> = ({
             </div>
 
             <div className="min-w-0 flex-1 pr-6">
-              <h3 className="font-serif-title text-xl font-bold text-stone-900 leading-tight">
-                {activePerson.name}
-              </h3>
-              {activePerson.callName && (
-                <p className="text-xs text-stone-500 font-medium mt-0.5">
-                  Panggilan: {activePerson.callName}
-                </p>
-              )}
               <div className="flex items-center gap-2 text-xs text-stone-500 mt-1">
                 <span>{activePerson.gender === 'MALE' ? 'Laki-laki (♂)' : 'Perempuan (♀)'}</span>
                 <span>·</span>
@@ -303,6 +294,7 @@ export const PersonDetailModal: React.FC<PersonDetailModalProps> = ({
 
         </div>
       </div>
-    </div>
+      </DrawerContent>
+    </Drawer>
   );
 };

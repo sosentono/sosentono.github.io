@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { EmptyState } from '../arc/empty-state/empty-state';
 import {
   Calendar,
   Clock,
@@ -557,9 +558,10 @@ export const AgendaSection: React.FC<AgendaSectionProps> = ({
 
           {/* Daftar Agenda Menggunakan AgendaCard */}
           {filteredAgendas.length === 0 ? (
-            <div className="p-12 text-center bg-white rounded-3xl border border-stone-200 text-stone-400 text-xs">
-              Belum ada agenda yang tersimpan.
-            </div>
+            <EmptyState
+              title="Belum ada agenda"
+              description="Belum ada agenda yang tersimpan untuk pilihan ini."
+            />
           ) : (
             <div className="space-y-3.5">
               {filteredAgendas.map((item) => (
