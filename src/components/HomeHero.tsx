@@ -28,7 +28,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
         {/* Cultural Motto Eyebrow Pill from prototype */}
         <div>
           <span className="inline-block text-[10px] sm:text-[11px] tracking-[2.5px] font-bold uppercase text-[#C9A84C] border border-[#C9A84C] bg-[rgba(201,168,76,0.14)] px-4 py-1 rounded-full shadow-xs">
-            OJO PEDOT OYOT! JANGAN PUTUS AKAR!
+            NGUMPULAKE BALUNG PISAH! OJO PEDOT OYOT!
           </span>
         </div>
 
