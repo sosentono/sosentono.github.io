@@ -240,7 +240,7 @@ export const FamilyTreeViewer: React.FC<FamilyTreeViewerProps> = ({
       {/* ================= PRINT-ONLY HEADER ================= */}
       <div className="hidden print-only p-6 border-b border-stone-300 text-center mb-6">
         <h1 className="text-2xl font-bold font-serif-title tracking-tight text-stone-900">
-          WIT KETURUNAN {settings.familyName.toUpperCase()}
+          SILSILAH {settings.familyName.toUpperCase()}
         </h1>
         <p className="text-xs italic text-stone-600 mt-1">
           "{settings.tagline}"
@@ -289,7 +289,7 @@ export const FamilyTreeViewer: React.FC<FamilyTreeViewerProps> = ({
               title="Tambah Anggota Baru ke Pohon Silsilah"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Tambah Anggota</span>
+              <span>Tambah Anggota</span>
             </button>
           )}
         </div>
@@ -435,7 +435,7 @@ export const FamilyTreeViewer: React.FC<FamilyTreeViewerProps> = ({
 
         {/* Marriage link */}
         <div className="flex items-center gap-1.5" title="Simbol Ikatan Pernikahan">
-          <span className="text-rose-600 text-xs">💍</span>
+          <span className="text-rose-600 text-xs">❤︎</span>
           <span className="text-stone-600 font-medium">Ikatan Nikah (Suami-Istri)</span>
         </div>
 
@@ -481,7 +481,7 @@ export const FamilyTreeViewer: React.FC<FamilyTreeViewerProps> = ({
 
             <div className="p-5 space-y-4 text-xs sm:text-sm text-stone-700">
               <p className="leading-relaxed text-stone-600">
-                Pohon silsilah dirancang agar anggota keluarga dapat dengan mudah membedakan garis keturunan darah langsung (*pancer*) dan ikatan pernikahan (*menantu*):
+                Pohon silsilah dirancang agar anggota keluarga dapat dengan mudah membedakan garis keturunan darah langsung (empu) dan ikatan pernikahan (menantu):
               </p>
 
               {/* Guide Item 1: Anak / Keturunan */}
@@ -491,7 +491,7 @@ export const FamilyTreeViewer: React.FC<FamilyTreeViewerProps> = ({
                 </div>
                 <div>
                   <h4 className="font-bold text-emerald-950 text-xs sm:text-sm">
-                    1. Anak / Keturunan Kandung (Garis Pancer)
+                    1. Anak / Keturunan Kandung (Garis Empu)
                   </h4>
                   <p className="text-xs text-emerald-800 mt-1 leading-relaxed">
                     • Memiliki <strong>label hijau jelas</strong>: <span className="bg-emerald-100 px-1 py-0.5 rounded font-bold">ANAK KANDUNG</span> atau <span className="bg-emerald-100 px-1 py-0.5 rounded font-bold">CUCU (PUTU)</span>.<br/>
@@ -511,7 +511,7 @@ export const FamilyTreeViewer: React.FC<FamilyTreeViewerProps> = ({
                     2. Pasangan / Menantu
                   </h4>
                   <p className="text-xs text-rose-800 mt-1 leading-relaxed">
-                    • Terletak <strong>bersebelahan</strong> di dalam bingkai pasangan dengan simbol cincin nikah <span className="font-bold text-rose-600">💍 NIKAH</span>.<br/>
+                    • Terletak <strong>bersebelahan</strong> di dalam bingkai pasangan dengan simbol hati "❤︎" nikah <span className="font-bold text-rose-600"> ❤︎ NIKAH</span>.<br/>
                     • Memiliki <strong>label kemerahan</strong>: <span className="bg-rose-100 px-1 py-0.5 rounded font-bold">PASANGAN / MENANTU</span>.<br/>
                     • Kartu berbingkai <strong>garis putus-putus (*dashed border*)</strong> dengan aksen warna rose di sisi kiri.
                   </p>
