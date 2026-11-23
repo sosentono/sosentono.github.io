@@ -77,7 +77,7 @@ export const PersonDetailModal: React.FC<PersonDetailModalProps> = ({
           <div className="flex flex-wrap items-center gap-2 mb-2">
             {activePerson.isDescendant ? (
               <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                𖣂 {activePerson.generation === 0 ? 'LELUHUR / WIWITAN' : (activePerson.generation === 1 ? 'ANAK KANDUNG' : 'KETURUNAN KANDUNG')}
+                𖣂 {activePerson.generation === 0 ? 'LELUHUR / EMPU' : (activePerson.generation === 1 ? 'ANAK KANDUNG' : 'KETURUNAN KANDUNG')}
               </span>
             ) : (
               <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-rose-800 border border-rose-300">
