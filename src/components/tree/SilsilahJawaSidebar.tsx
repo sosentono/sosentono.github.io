@@ -16,10 +16,10 @@ export const SilsilahJawaSidebar: React.FC<SilsilahJawaSidebarProps> = ({
 
   return (
     <div className="bg-white rounded-xl border border-[#C9A84C]/25 shadow-sm p-4 w-full">
-      {/* Title matching prototype: 🌿 Silsilah Jawa */}
+      {/* Title matching prototype: ❣ Silsilah Jawa */}
       <div className="border-b border-[#C9A84C]/20 pb-2.5 mb-3 flex items-center justify-between">
         <h3 className="font-serif-title font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
-          <span>🌿</span>
+          <span>❣</span>
           <span>Silsilah Jawa</span>
         </h3>
         <span className="text-[10px] text-[#A0785A] uppercase tracking-wider font-semibold">
