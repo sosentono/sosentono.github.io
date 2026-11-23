@@ -35,7 +35,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   const getDescendantBadge = () => {
     if (gen === 0) {
       return {
-        label: '👑 WIWITAN (LELUHUR)',
+        label: '👑 EMPU',
         className: 'bg-amber-100 text-amber-900 border-amber-300',
         roleText: 'Pancer Pokok / Leluhur',
       };
@@ -84,7 +84,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         {/* Small header label for the couple container if married */}
         {hasSpouses && (
           <div className="absolute -top-2.5 left-4 px-2 py-0.5 rounded-full bg-white border border-[#C9A84C]/40 text-[9px] font-bold text-[#8B6A50] shadow-2xs select-none">
-            💍 Ikatan Keluarga / Pasangan
+            ❤︎ Ikatan Keluarga / Pasangan
           </div>
         )}
 
@@ -159,7 +159,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
               <div className="flex items-center">
                 <div className="w-2 sm:w-2.5 h-[2px] bg-rose-300" />
                 <div className="w-5 h-5 rounded-full bg-rose-50 border border-rose-300 text-rose-600 flex items-center justify-center shadow-2xs text-[11px]">
-                  💍
+                  ❤︎
                 </div>
                 <div className="w-2 sm:w-2.5 h-[2px] bg-rose-300" />
               </div>
@@ -185,7 +185,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
                 {/* Explicit Role Pill: PASANGAN / MENANTU */}
                 <div className="flex items-center gap-1 mb-1">
                   <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-extrabold tracking-tight border uppercase bg-rose-100 text-rose-800 border-rose-200">
-                    💍 PASANGAN / MENANTU
+                    ❤︎ PASANGAN / MENANTU
                   </span>
                 </div>
 
