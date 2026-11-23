@@ -362,8 +362,8 @@ export const MemberDirectory: React.FC<MemberDirectoryProps> = ({
               className="w-full bg-[#FAF7F2] text-stone-800 text-xs py-2 px-2.5 rounded-xl border border-[#C9A84C]/25 focus:outline-none focus:ring-1 focus:ring-[#C9A84C] truncate"
             >
               <option value="ALL">Keturunan & Pasangan</option>
-              <option value="BLOOD">🌿 Hanya Keturunan Kandung</option>
-              <option value="SPOUSE">💍 Hanya Pasangan / Menantu</option>
+              <option value="BLOOD">𖣂 Hanya Keturunan Kandung</option>
+              <option value="SPOUSE">♥︎ Hanya Pasangan / Menantu</option>
             </select>
           </div>
 
@@ -512,11 +512,11 @@ export const MemberDirectory: React.FC<MemberDirectoryProps> = ({
                   <div className="mb-1.5 flex items-center gap-1.5 flex-wrap">
                     {p.isDescendant ? (
                       <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">
-                        🌿 {p.generation === 0 ? 'WIWITAN / LELUHUR' : (p.generation === 1 ? 'ANAK KANDUNG' : 'KETURUNAN')}
+                        𖣂 {p.generation === 0 ? 'WIWITAN / LELUHUR' : (p.generation === 1 ? 'ANAK KANDUNG' : 'KETURUNAN')}
                       </span>
                     ) : (
                       <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase bg-rose-100 text-rose-800 border border-rose-300">
-                        💍 PASANGAN / MENANTU
+                        ♥︎ PASANGAN / MENANTU
                       </span>
                     )}
 
@@ -556,7 +556,7 @@ export const MemberDirectory: React.FC<MemberDirectoryProps> = ({
                   <div className="flex items-center justify-between text-[11px] text-stone-500 pt-3 mt-3 border-t border-[#C9A84C]/15">
                     <span className="font-mono">
                       {p.birthYear ? `Lahir ${p.birthYear}` : 'Tahun lahir -'}
-                      {!p.isAlive && ` (†)`}
+                      {!p.isAlive && `★`}
                     </span>
                     <span className="text-[#C9A84C] text-[11px] font-semibold flex items-center gap-0.5">
                       <span>Detail</span>
