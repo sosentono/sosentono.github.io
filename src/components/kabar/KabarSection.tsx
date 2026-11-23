@@ -81,7 +81,7 @@ export const KabarSection: React.FC<KabarSectionProps> = ({
 
       {!isAdmin && (
         <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-[#C9A84C]/20 text-xs text-stone-600">
-          <span>🔒</span>
+          <span>ꄗ</span>
           <span>Hanya akun admin terverifikasi yang dapat menambah atau mengelola warta kabar keluarga.</span>
         </div>
       )}
